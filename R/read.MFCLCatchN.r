@@ -6,7 +6,15 @@
                     
 read.MFCLCatchN <- function(file="ests.rep", first.yr=1972){
 
-  splitter2 <- function(...) stop("splitter2 is undefined")
+  # Scan text and count the columns
+  splitter2 <- function(txt, label)
+  {
+    if(!any(txt == label))
+      stop("label '", label, "' not found in ", basename(file))
+    row.num <- match(label, txt) + 1  # first line following the label
+    entries <- scan(text=ests[row.num], quiet=TRUE)
+    length(entries)
+  }
 
   ests <- readLines(file)
   
